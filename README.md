@@ -1,46 +1,83 @@
-# Getting Started with Create React App
+# Gemini-Style Chat Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive, Gemini-inspired conversational UI built with React + TypeScript + Tailwind. Implements OTP auth simulation, chatroom management, AI-like replies, reverse infinite scroll, pagination, image uploads, toasts, dark mode, and local persistence.
 
-## Available Scripts
+## Live
 
-In the project directory, you can run:
+Add your deployment link here.
 
-### `yarn start`
+## Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 19 + TypeScript
+- Redux Toolkit for state management
+- React Hook Form + Zod for validation
+- Tailwind CSS for styling (dark mode enabled)
+- React Router for routing
+- react-hot-toast for toasts
+- lodash.debounce for search UX
+- dayjs for time formatting
+- uuid for ids
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Setup
 
-### `yarn test`
+1. Install deps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+yarn
+# or
+npm install
+```
 
-### `yarn build`
+2. Start dev server:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+yarn start
+# or
+npm run start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Authentication
+  - OTP-based flow with country code select (fetched from `restcountries.com`)
+  - Simulated send/verify via `setTimeout`
+  - Validation with React Hook Form + Zod
+- Dashboard
+  - List, create, and delete chatrooms
+  - Debounced search
+  - Toast confirmations
+- Chatroom Interface
+  - User and AI messages, timestamps
+  - Typing indicator: "Gemini is typing..."
+  - Simulated AI reply with throttling
+  - Auto-scroll to latest
+  - Reverse infinite scroll + client pagination (20 per batch simulated)
+  - Image upload with preview URL
+  - Copy-to-clipboard on hover
+  - Loading skeletons
+- Global UX
+  - Mobile responsive
+  - Dark mode toggle (persisted)
+  - LocalStorage persistence for auth and chat
+  - Keyboard accessibility
 
-### `yarn eject`
+## Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `src/pages/*`: `AuthPage`, `DashboardPage`, `ChatPage`
+- `src/components/*`: layout shell, dark toggle, search; chat subcomponents
+- `src/redux/*`: store + slices for auth and chat
+- `src/api/*`: REST Countries helper
+- `src/hooks/*`: dark mode, localStorage, debounce
+- `src/utils/*`: storage, clipboard
+- `src/types.ts`: app-wide types
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Implementation Notes
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Throttling: A cooldown flag prevents rapid AI responses; delays are randomized to simulate thinking.
+- Pagination/Infinite Scroll: `ChatList` triggers `loadOlder()` near top; older batches are prepended and `hasMore` stops after ~200 messages.
+- Validation: Zod schemas power both phone and OTP steps.
+- Persistence: Entire Redux state is saved to LocalStorage on changes and rehydrated on load.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Screenshots
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Add screenshots of light/dark modes and chat interactions.
